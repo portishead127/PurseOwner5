@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fighter.cs" />
+    <Compile Include="GameLoop.cs" />
     <Compile Include="PartyMember.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

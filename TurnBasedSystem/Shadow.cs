@@ -8,12 +8,6 @@ namespace TurnBasedSystem
 {
     internal class Shadow : Fighter
     {
-        public Shadow(int hp,int sp, int atk)
-        {
-            this.hp = hp;
-            maxHp = hp;
-            this.sp = sp;
-            this.atk = atk;
-        }
+        public Shadow(int hp, int sp, int atk, int atkVarience): base(hp, sp, atk, atkVarience) { }
     }
 }
