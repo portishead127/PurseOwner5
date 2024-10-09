@@ -8,7 +8,18 @@ using System.Threading.Tasks;
 namespace TurnBasedSystem
 {
     internal class PartyMember : Fighter 
-    { 
-        public PartyMember(int hp, int sp, int atk, int atkVarience): base(hp,sp,atk,atkVarience){}
+    {
+        Gun gun;
+
+        public PartyMember(string name, int hp, int sp, Melee melee, Gun gun): base(name,hp,sp, melee)
+        {
+            this.gun = gun;
+        }
+
+        public Gun Gun
+        {
+            get { return gun; }
+            set { gun = value; }
+        }
     }
 }

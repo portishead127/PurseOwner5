@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TurnBasedSystem
 {
-    internal class Shadow : Fighter
-    {
-        public Shadow(string name, int hp, int sp, Melee melee) : base(name, hp, sp, melee) { }
+    internal class Melee : Weapon
+    { 
+        public Melee(string name, int atk, int atkVarience, int hitChance): base(name,atk,atkVarience,hitChance){}
     }
 }

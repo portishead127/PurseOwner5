@@ -8,36 +8,54 @@ namespace TurnBasedSystem
 {
     internal abstract class Fighter
     {
+        string name;
         int hp;
         int sp;
-        int atk;
         int maxHp;
         int maxSp;
-        int atkVarience;
-        bool isDead;
+        Melee melee;
 
-        public Fighter(int hp, int sp, int atk, int atkVarience)
+        bool isDead;
+        bool isGuarding;
+
+        static Random rand = new Random();
+
+
+        public Fighter(string name, int hp, int sp, Melee melee)
         {
+            this.name = name;
             this.hp = hp;
             this.sp = sp;
-            this.atk = atk;
             maxHp = hp;
             maxSp = sp;
-            this.atkVarience = atkVarience;
+            this.melee = melee;
+
             isDead = false;
+            isGuarding = false;
         }
 
+        public string Name
+        {
+            get { return name; }
+        }
         public int HP
         {
             get { return hp; }
-            set { hp = value; }
+            set
+            {
+                hp = Math.Max(0, value);
+                if(hp == 0)
+                {
+                    isDead = true;
+                }
+            }
         }
         public int MaxHP
         {
             get { return maxHp; }
             set { maxHp = value; }
         }
-        public int Sp
+        public int SP
         {
             get { return sp; }
             set { sp = value; }
@@ -47,36 +65,21 @@ namespace TurnBasedSystem
             get { return maxSp; }
             set { maxSp = value; }
         }
-        public int Atk
+        public Melee Melee
         {
-            get { return atk; }
+            get { return melee; }
+            set { melee = value; }
         }
-        public int AtkVarience
-        {
-            get { return atkVarience; }
-        }
+
         public bool IsDead
         {
             get { return isDead; }
             set { isDead = value; }
         }
-
-        public void Attack(Fighter target)
+        public bool IsGuarding
         {
-            int damageToDeal = RollAttack();
-            target.HP -= damageToDeal;
-            if(target.HP <= 0)
-            {
-                target.IsDead = true;
-            }
-        }
-
-        private int RollAttack()
-        {
-            Random rand = new Random();
-            int damageVarience = rand.Next(-AtkVarience, AtkVarience);
-            int newAtk = Atk + damageVarience;
-            return newAtk;
+            get { return isGuarding; }
+            set { isGuarding = value;} 
         }
     }
 }

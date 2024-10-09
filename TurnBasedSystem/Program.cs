@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace TurnBasedSystem
 {
     class Program
-    { 
+    {
         static void Main(string[] args)
         {
-            GameLoop gameLoop = new GameLoop();
-            gameLoop.Start();
+            Console.CursorVisible = false;
+            GameLoop.Start();
         }
     }
 }
