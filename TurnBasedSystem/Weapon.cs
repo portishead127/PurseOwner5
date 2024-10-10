@@ -40,25 +40,24 @@ namespace TurnBasedSystem
             get { return hitChance; }
         }
 
-        public void Attack()
+        public void Attack(Fighter target)
         {
             if (RollToHit())
             {
                 int damageToDeal = RollAttack();
-                if (GameLoop.currentTarget.IsGuarding)
+                if (target.IsGuarding)
                 {
-                    GameLoop.currentTarget.HP -= (int)Math.Ceiling(damageToDeal * 0.4);
-                    GameLoop.currentTarget.IsGuarding = false;
+                    target.HP -= (int)Math.Ceiling(damageToDeal * 0.4);
+                    target.IsGuarding = false;
                     return;
                 }
-                GameLoop.currentTarget.HP -= damageToDeal;
+                target.HP -= damageToDeal;
             }
             else
             {
                 Console.WriteLine("Missed!");
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
             }
-            GameLoop.isActionSelected = true;
         }
 
         protected bool RollToHit()

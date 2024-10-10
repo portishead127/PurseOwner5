@@ -22,77 +22,26 @@ namespace TurnBasedSystem
             set { bullets = Math.Max(0, value);}
         }
 
-        void Shoot()
+        public void Shoot(Fighter target)
         {
             Bullets--;
             if (RollToHit())
             {
                 int damageToDeal = RollAttack();
-                if (GameLoop.currentTarget.IsGuarding)
+                if (target.IsGuarding)
                 {
-                    GameLoop.currentTarget.HP -= (int)Math.Ceiling(damageToDeal * 0.4);
-                    GameLoop.currentTarget.IsGuarding = false;
+                    target.HP -= (int)Math.Ceiling(damageToDeal * 0.4);
+                    target.IsGuarding = false;
                     return;
                 }
-                GameLoop.currentTarget.HP -= damageToDeal;
+                target.HP -= damageToDeal;
+                Thread.Sleep(50);
             }
             else
             {
                 Console.WriteLine("Missed!");
-                Thread.Sleep(250);
+                Thread.Sleep(500);
             }
-        }
-
-        public void Aim()
-        {
-            int startingBullets = Bullets;
-            List<Shadow> activeShadows = GameLoop.activeShadows;
-            ConsoleKey keyPressed;
-            do
-            {
-                GameLoop.currentTarget = activeShadows[GameLoop.indexOfCurrentTarget];
-
-                Console.Clear();
-                GameLoop.ShowStatus();
-                Console.WriteLine($"{GameLoop.fighterToMove.Name}'s Turn:");
-                Console.WriteLine($"\nCurrently targetting: {GameLoop.currentTarget.Name}\n\n");
-                Console.WriteLine("SPACEBAR: SHOOT");
-                Console.WriteLine("C: BACK");
-                keyPressed = Console.ReadKey(true).Key;
-                switch (keyPressed)
-                {
-                    case ConsoleKey.RightArrow:
-                        if (GameLoop.indexOfCurrentTarget == activeShadows.Count - 1)
-                        {
-                            GameLoop.indexOfCurrentTarget = 0;
-                            break;
-                        }
-                        GameLoop.indexOfCurrentTarget++;
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        if (GameLoop.indexOfCurrentTarget == 0)
-                        {
-                            GameLoop.indexOfCurrentTarget = activeShadows.Count - 1;
-                            break;
-                        }
-                        GameLoop.indexOfCurrentTarget--;
-                        break;
-                    case ConsoleKey.Spacebar:
-                        ((PartyMember)GameLoop.fighterToMove).Gun.Shoot();
-                        break;
-                    case ConsoleKey.C:
-                        break;
-                    default: break;
-                }
-            } while (keyPressed != ConsoleKey.C && Bullets > 0);
-
-            //Either pressed back or run out of bullets
-            if(Bullets < startingBullets)
-            {
-                GameLoop.isActionSelected = true;
-            }
-
-            return;
         }
     }
 }
